@@ -19,9 +19,7 @@
 #include "sha3/sph_fugue.h"
 #include "sha3/sph_shabal.h"
 #include "sha3/sph_whirlpool.h"
-extern "C" {
-    #include "sha3/sph_sha2.h"
-}
+#include "sha3/sph_sha2.h"
 
 void x16r_hash(const char* input, char* output)
 {

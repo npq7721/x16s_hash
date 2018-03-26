@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "sph_hamsi.h": "c"
+        "sph_hamsi.h": "c",
+        "sph_bmw.h": "c"
     }
 }
