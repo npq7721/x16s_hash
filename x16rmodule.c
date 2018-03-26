@@ -1,8 +1,8 @@
 #include <Python.h>
 
-#include "x15.h"
+#include "x16r.h"
 
-static PyObject *x15_getpowhash(PyObject *self, PyObject *args)
+static PyObject *x16r_getpowhash(PyObject *self, PyObject *args)
 {
     char *output;
     PyObject *value;
@@ -17,9 +17,9 @@ static PyObject *x15_getpowhash(PyObject *self, PyObject *args)
     output = PyMem_Malloc(32);
 
 #if PY_MAJOR_VERSION >= 3
-    x15_hash((char *)PyBytes_AsString((PyObject*) input), output);
+    x16r_hash((char *)PyBytes_AsString((PyObject*) input), output);
 #else
-    x15_hash((char *)PyString_AsString((PyObject*) input), output);
+    x16r_hash((char *)PyString_AsString((PyObject*) input), output);
 #endif
     Py_DECREF(input);
 #if PY_MAJOR_VERSION >= 3
@@ -31,27 +31,27 @@ static PyObject *x15_getpowhash(PyObject *self, PyObject *args)
     return value;
 }
 
-static PyMethodDef X15Methods[] = {
-    { "getPoWHash", x15_getpowhash, METH_VARARGS, "Returns the proof of work hash using X15 hash" },
+static PyMethodDef X16rMethods[] = {
+    { "getPoWHash", x16r_getpowhash, METH_VARARGS, "Returns the proof of work hash using X16r hash" },
     { NULL, NULL, 0, NULL }
 };
 
 #if PY_MAJOR_VERSION >= 3
-static struct PyModuleDef X15Module = {
+static struct PyModuleDef X16rModule = {
     PyModuleDef_HEAD_INIT,
-    "x15_hash",
+    "x16r_hash",
     "...",
     -1,
-    X15Methods
+    X16rMethods
 };
 
-PyMODINIT_FUNC PyInit_x15_hash(void) {
-    return PyModule_Create(&X15Module);
+PyMODINIT_FUNC PyInit_x16r_hash(void) {
+    return PyModule_Create(&X16rModule);
 }
 
 #else
 
-PyMODINIT_FUNC initx15_hash(void) {
-    (void) Py_InitModule("x15_hash", X15Methods);
+PyMODINIT_FUNC initx16r_hash(void) {
+    (void) Py_InitModule("x16r_hash", X16rMethods);
 }
 #endif

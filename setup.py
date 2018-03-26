@@ -1,8 +1,8 @@
 from distutils.core import setup, Extension
 
-x15_hash_module = Extension('x15_hash',
-                               sources = ['x15module.c',
-                                          'x15.c',
+x16r_hash_module = Extension('x16r_hash',
+                               sources = ['x16rmodule.c',
+                                          'x16r.c',
 										  'sha3/blake.c',
 										  'sha3/bmw.c',
 										  'sha3/groestl.c',
@@ -22,7 +22,7 @@ x15_hash_module = Extension('x15_hash',
 
                                include_dirs=['.', './sha3'])
 
-setup (name = 'x15_hash',
+setup (name = 'x16r_hash',
        version = '1.0',
-       description = 'Bindings for proof of work used by X15',
-       ext_modules = [x15_hash_module])
+       description = 'Bindings for proof of work used by X16r',
+       ext_modules = [x16r_hash_module])

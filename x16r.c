@@ -1,4 +1,4 @@
-#include "x15.h"
+#include "x16r.h"
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -19,8 +19,11 @@
 #include "sha3/sph_fugue.h"
 #include "sha3/sph_shabal.h"
 #include "sha3/sph_whirlpool.h"
+extern "C" {
+    #include "sha3/sph_sha2.h"
+}
 
-void x15_hash(const char* input, char* output)
+void x16r_hash(const char* input, char* output)
 {
     sph_blake512_context     ctx_blake;
     sph_bmw512_context       ctx_bmw;
@@ -38,6 +41,8 @@ void x15_hash(const char* input, char* output)
     
 	sph_shabal512_context       ctx_shabal1;
     sph_whirlpool_context       ctx_whirlpool1;
+
+    sph_sha512_context       ctx_sha512;
 
     //these uint512 in the c++ source of the client are backed by an array of uint32
     uint32_t hashA[16], hashB[16];	
@@ -102,7 +107,11 @@ void x15_hash(const char* input, char* output)
     sph_whirlpool (&ctx_whirlpool1, hashB, 64);
     sph_whirlpool_close(&ctx_whirlpool1, hashA);
 
-    memcpy(output, hashA, 32);
+    sph_sha512_init (&ctx_sha512);
+    sph_sha512 (&ctx_sha512, hashA, 64);
+    sph_sha512_close (&ctx_sha512, hashB);
+
+    memcpy(output, hashB, 32);
 	
 }
 
