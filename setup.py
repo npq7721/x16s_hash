@@ -18,7 +18,8 @@ x16r_hash_module = Extension('x16r_hash',
 										  'sha3/fugue.c',
 										  'sha3/shavite.c',
 										  'sha3/shabal.c',
-										  'sha3/whirlpool.c'],
+										  'sha3/whirlpool.c',
+											'sha3/sha2big.c'],
 
                                include_dirs=['.', './sha3'])
 
