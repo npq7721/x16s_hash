@@ -44,8 +44,9 @@ enum Algo {
 static void getAlgoString(const uint8_t* prevblock, char *output)
 {
     char *sptr = output;
+    int j;
 
-    for (int j = 0; j < HASH_FUNC_COUNT; j++) {
+    for (j = 0; j < HASH_FUNC_COUNT; j++) {
         char b = (15 - j) >> 1; // 16 ascii hex chars, reversed
         uint8_t algoDigit = (j & 1) ? prevblock[b] & 0xF : prevblock[b] >> 4;
         if (algoDigit >= 10)
