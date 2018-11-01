@@ -1,4 +1,4 @@
-#include "x16r.h"
+#include "x16s.h"
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -43,22 +43,21 @@ enum Algo {
 
 static void getAlgoString(const uint8_t* prevblock, char *output)
 {
-    char *sptr = output;
-    int j;
+	strcpy(output, "0123456789ABCDEF");
 
-    for (j = 0; j < HASH_FUNC_COUNT; j++) {
-        char b = (15 - j) >> 1; // 16 ascii hex chars, reversed
-        uint8_t algoDigit = (j & 1) ? prevblock[b] & 0xF : prevblock[b] >> 4;
-        if (algoDigit >= 10)
-            sprintf(sptr, "%c", 'A' + (algoDigit - 10));
-        else
-            sprintf(sptr, "%u", (uint32_t) algoDigit);
-        sptr++;
-    }
-    *sptr = '\0';
+	for(int i = 0; i < 16; i++){
+		uint8_t b = (15 - i) >> 1; // 16 ascii hex chars, reversed
+		uint8_t algoDigit = (i & 1) ? prevblock[b] & 0xF : prevblock[b] >> 4;
+		int offset = algoDigit;
+		// insert the nth character at the front
+		char oldVal = output[offset];
+		for(int j=offset; j-->0;)
+			output[j+1] = output[j];
+		output[0] = oldVal;
+	}
 }
 
-void x16r_hash(const char* input, char* output)
+void x16s_hash(const char* input, char* output)
 {
     uint32_t hash[64/4];
     char hashOrder[HASH_FUNC_COUNT + 1] = { 0 };
